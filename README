@@ -1,0 +1,44 @@
+Sigasi deployment helper (making it a bit less painful)
+------------------------
+
+Problems:
+    * Eclipse stuff like Sigasi usually wants to be manually installed directly from the web,
+      in user context, and it wants to update itself
+    * We need fully automatic deployment (no manual intervention)
+    * We need exact control of the packages installed - we can't have any updates bypassing
+      our deployment processes
+    * Target systems tend to be isolated from the internet, thus no online installation or
+      or updates possible
+
+Ergo:
+    * We need to mirror the sigasi repo to our local systems
+    * Mirroring has to be done from selected machines that do have internet access
+    * The sigasi repo is *huge* - contains a whole eclipse installation - therefore
+      needs to be filtered
+
+Problems again:
+    * Even when using a local repo mirror, it regularily wants to update itself (actually a
+      full reinstallation), and these fail for yet unknown reasons (wanted versions are
+      exactly the same as the already installed ones)
+    * This still runs in user-context, thus has to be done for each user separately
+    * This also causes distortions (eg. update wizard coming up again and again) when using
+      different Eclipse versions
+
+Ergo:
+    * We have to bypass the P2 installer and place the plugins directly into the filesystem,
+      just as the distros do with their packaged installations.
+      --> $eclipse_prefix/dropins/<name>
+    * Has to be done for all installed eclipse versions (dropin dirs can be symlink'ed)
+
+Solution:
+    * Mirror the Sigasi repo and pick out the actually needed plugins (drop the upstream parts,
+      that are already in the existing Eclipse installation)
+    * Place the plugins into the dropins dir of the system wide Eclipse installation
+    * Store the (filtered) repo in our SCM (future: articatory)
+
+Scripts:
+    * sigasi-mirror-orig    -- locally mirror the original Sigasi repo
+    * sigasi-filter-repo    -- filter the mirrored repo for the required plugins and create
+                               a new P2 repo from that
+    * sigasi-prepare-tree   -- create an installation tree to to placed into eclipse instance
+    * sigasi-install-tree   -- install the prepared tree into the target instance

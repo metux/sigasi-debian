@@ -1,0 +1,7 @@
+#!/bin/bash
+
+my_prefix=$(dirname $(readlink -f $0))
+
+. $my_prefix/lib/common.sh
+
+sigasi_create_tree

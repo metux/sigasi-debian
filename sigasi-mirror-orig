@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#
+# mirror the original sigasi repo
+#
+
+my_prefix=$(dirname $(readlink -f $0))
+
+. $my_prefix/lib/common.sh
+
+sigasi_mirror_orig

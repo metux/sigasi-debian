@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#
+# directly install into user instance from the web
+#
+
+my_prefix=$(dirname $(readlink -f $0))
+
+. $my_prefix/lib/common.sh
+
+target_uri="file://$(pwd)/$SIGASI_REPO_TARGET"
+
+modules="com.sigasi.hdt.verilog.feature.feature.group,com.sigasi.hdt.vhdl.feature.feature.group,com.sigasi.markers.feature.feature.group,com.mousefeed.feature.feature.group"
+
+$ECLIPSE_CMD \
+    -nosplash \
+    -clean \
+    -purgeHistory \
+    -application org.eclipse.equinox.p2.director \
+    -repository $target_uri \
+    -installIUs $modules
