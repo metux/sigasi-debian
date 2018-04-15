@@ -1,0 +1,12 @@
+Source: eclipse-sigasi
+Section: devel
+Priority: extra
+Maintainer: Enrico Weigelt, metux IT consult <info@metux.net>
+Standards-Version: 3.9.3
+Build-Depends: debhelper (>= 7), make
+
+Package: eclipse-sigasi
+Architecture: all
+Pre-Depends: debconf
+Depends:  ${misc:Depends}
+Description: VHDL tools for Eclipse
